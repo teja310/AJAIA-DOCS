@@ -3,7 +3,7 @@
 ## Links
 
 - **Live app:** _TODO — paste Render URL after deploy_
-- **Source repo:** _TODO — paste GitHub URL_
+- **Source repo:** https://github.com/teja310/AJAIA-DOCS
 - **Walkthrough video:** see `VIDEO_URL.txt`
 
 ## Test accounts
