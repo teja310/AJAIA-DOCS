@@ -4,7 +4,6 @@
 
 - **Live app:** https://ajaia-docs-74n2.onrender.com (free tier: the first visit after ~15 min idle takes 30–60 s to wake up)
 - **Source repo:** https://github.com/teja310/AJAIA-DOCS
-- **Walkthrough video:** see `VIDEO_URL.txt`
 
 ## Test accounts
 
@@ -26,14 +25,13 @@ Suggested 2-minute review: sign in as Alice → open the welcome doc → Share �
 | Setup & run instructions | `README.md` |
 | Architecture note | `docs/ARCHITECTURE.md` |
 | AI workflow note | `docs/AI_WORKFLOW.md` |
-| Walkthrough video URL | `VIDEO_URL.txt` |
 | Screenshots | `docs/screenshots/*.png` |
-| Automated tests | `server/test/*.test.ts` (20 API tests), `e2e/ui-smoke.mjs` (browser flow) |
+| Automated tests | `server/test/*.test.ts` (21 API tests), `e2e/ui-smoke.mjs` (browser flow) |
 | Deployment config | `render.yaml` |
 
 ## Status
 
-**Working end to end:** document create / rename / edit / delete; rich text (bold, italic, underline, strikethrough, H1–H3, bulleted & numbered lists, quotes, undo/redo); autosave with status; `.txt` / `.md` / `.docx` upload as a new document or appended to an existing one; sharing with viewer/editor roles, role change and revoke; owned vs shared dashboard; persistence across refresh; stale-write conflict detection; validation and error handling; 20 passing API tests + a browser smoke test; single-service deployment.
+**Working end to end:** document create / rename / edit / delete; rich text (bold, italic, underline, strikethrough, H1–H3, bulleted & numbered lists, quotes, undo/redo); autosave with status; `.txt` / `.md` / `.docx` upload as a new document or appended to an existing one; sharing with viewer/editor roles, role change and revoke; owned vs shared dashboard; persistence across refresh; stale-write conflict detection; validation and error handling; 21 passing API tests + a browser smoke test; single-service deployment.
 
 **Incomplete / known limitations:**
 - Render free tier has an ephemeral disk, so hosted data resets when the service redeploys or wakes from sleep (seed data is recreated). Local runs persist normally.
