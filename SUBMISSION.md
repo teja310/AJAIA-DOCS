@@ -2,7 +2,7 @@
 
 ## Links
 
-- **Live app:** _TODO — paste Render URL after deploy_
+- **Live app:** https://ajaia-docs-74n2.onrender.com (free tier: the first visit after ~15 min idle takes 30–60 s to wake up)
 - **Source repo:** https://github.com/teja310/AJAIA-DOCS
 - **Walkthrough video:** see `VIDEO_URL.txt`
 
