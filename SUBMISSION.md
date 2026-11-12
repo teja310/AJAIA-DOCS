@@ -4,7 +4,7 @@
 
 - **Live app:** https://ajaia-docs-74n2.onrender.com (free tier: the first visit after ~15 min idle takes 30–60 s to wake up)
 - **Source repo:** https://github.com/teja310/AJAIA-DOCS
-- **Walkthrough video:** see `VIDEO_URL.txt`
+- **Walkthrough video:** https://www.loom.com/share/4b8a53bddec2481783d4ff4812d1f27d (also in `VIDEO_URL.txt`)
 
 ## Test accounts
 
