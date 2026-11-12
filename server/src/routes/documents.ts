@@ -31,6 +31,18 @@ export interface DocumentRow {
   updated_at: string;
 }
 
+/** How much of each document's HTML the dashboard gets for its card preview. */
+const PREVIEW_CHARS = 1500;
+
+interface ListRow {
+  id: string;
+  title: string;
+  updated_at: string;
+  owner_name: string;
+  role: string;
+  preview: string;
+}
+
 const SELECT_DOC = `
   SELECT d.id, d.owner_id, u.name AS owner_name, d.title, d.content_html, d.version, d.created_at, d.updated_at
     FROM documents d JOIN users u ON u.id = d.owner_id`;
@@ -57,21 +69,25 @@ export function documentsRouter(db: DB) {
     const userId = req.user!.id;
     const owned = db
       .prepare(
-        `SELECT d.id, d.title, d.updated_at, u.name AS owner_name, 'owner' AS role
+        `SELECT d.id, d.title, d.updated_at, u.name AS owner_name, 'owner' AS role,
+                substr(d.content_html, 1, ${PREVIEW_CHARS}) AS preview
            FROM documents d JOIN users u ON u.id = d.owner_id
           WHERE d.owner_id = ? ORDER BY d.updated_at DESC`,
       )
-      .all(userId);
+      .all(userId) as ListRow[];
     const shared = db
       .prepare(
-        `SELECT d.id, d.title, d.updated_at, u.name AS owner_name, s.role
+        `SELECT d.id, d.title, d.updated_at, u.name AS owner_name, s.role,
+                substr(d.content_html, 1, ${PREVIEW_CHARS}) AS preview
            FROM document_shares s
            JOIN documents d ON d.id = s.document_id
            JOIN users u ON u.id = d.owner_id
           WHERE s.user_id = ? ORDER BY d.updated_at DESC`,
       )
-      .all(userId);
-    res.json({ owned, shared });
+      .all(userId) as ListRow[];
+    // Re-sanitizing closes any tags cut off by the truncation, so the preview is valid HTML.
+    const withPreview = (rows: ListRow[]) => rows.map((r) => ({ ...r, preview: sanitize(r.preview) }));
+    res.json({ owned: withPreview(owned), shared: withPreview(shared) });
   });
 
   router.post('/', (req, res) => {

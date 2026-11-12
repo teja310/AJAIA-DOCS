@@ -105,7 +105,7 @@ log('shared with bob (viewer) + carol (editor)');
 const bob = await session('Bob Okafor');
 const shared = bob.locator('.doc-section', { hasText: 'Shared with me' });
 await shared.getByText('Q3 Launch Plan').waitFor();
-await shared.locator('.doc-row', { hasText: 'Q3 Launch Plan' }).getByText('View only').waitFor();
+await shared.locator('.doc-item', { hasText: 'Q3 Launch Plan' }).getByText('View only').waitFor();
 await bob.screenshot({ path: OUT + '04-bob-dashboard.png' });
 await bob.goto(docUrl);
 await bob.getByText(/view-only/).waitFor();

@@ -14,6 +14,11 @@ export interface DocSummary {
   role: Role;
 }
 
+/** Dashboard row: summary plus a short sanitized HTML preview for the card thumbnail. */
+export interface DocListItem extends DocSummary {
+  preview: string;
+}
+
 export interface Doc extends DocSummary {
   owner_id: number;
   content_html: string;
@@ -68,7 +73,7 @@ export const api = {
   logout: () => request<void>('POST', '/auth/logout'),
   users: () => request<{ users: User[] }>('GET', '/users'),
 
-  listDocs: () => request<{ owned: DocSummary[]; shared: DocSummary[] }>('GET', '/documents'),
+  listDocs: () => request<{ owned: DocListItem[]; shared: DocListItem[] }>('GET', '/documents'),
   createDoc: () => request<{ document: Doc }>('POST', '/documents', {}),
   getDoc: (id: string) => request<{ document: Doc }>('GET', `/documents/${id}`),
   updateDoc: (id: string, body: { title?: string; content_html?: string; version: number }) =>

@@ -1,19 +1,33 @@
 import { useEditorState, type Editor } from '@tiptap/react';
 import type { ReactNode } from 'react';
+import {
+  Bold,
+  Italic,
+  List,
+  ListOrdered,
+  Quote,
+  Redo2,
+  RemoveFormatting,
+  Strikethrough,
+  Underline,
+  Undo2,
+} from 'lucide-react';
 
 const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
 const mod = isMac ? '⌘' : 'Ctrl+';
+const shift = isMac ? '⇧' : 'Shift+';
+const ICON = { size: 18, strokeWidth: 2 } as const;
 
 function Btn(props: { label: string; shortcut?: string; active?: boolean; disabled?: boolean; onClick: () => void; children: ReactNode }) {
-  const title = props.shortcut ? `${props.label} (${props.shortcut})` : props.label;
   return (
     <button
       type="button"
       className={`tb-btn${props.active ? ' is-active' : ''}`}
-      title={title}
-      aria-label={props.label}
+      aria-label={props.shortcut ? `${props.label} (${props.shortcut})` : props.label}
       aria-pressed={props.active}
       disabled={props.disabled}
+      data-tip={props.label}
+      data-shortcut={props.shortcut}
       // Keep focus (and the selection) in the editor when clicking toolbar buttons.
       onMouseDown={(e) => e.preventDefault()}
       onClick={props.onClick}
@@ -48,8 +62,12 @@ export function Toolbar({ editor }: { editor: Editor }) {
 
   return (
     <div className="toolbar" role="toolbar" aria-label="Formatting">
-      <Btn label="Undo" shortcut={`${mod}Z`} disabled={!s.canUndo} onClick={() => chain().undo().run()}>↶</Btn>
-      <Btn label="Redo" shortcut={`${mod}Shift+Z`} disabled={!s.canRedo} onClick={() => chain().redo().run()}>↷</Btn>
+      <Btn label="Undo" shortcut={`${mod}Z`} disabled={!s.canUndo} onClick={() => chain().undo().run()}>
+        <Undo2 {...ICON} />
+      </Btn>
+      <Btn label="Redo" shortcut={`${mod}${shift}Z`} disabled={!s.canRedo} onClick={() => chain().redo().run()}>
+        <Redo2 {...ICON} />
+      </Btn>
       <span className="tb-sep" />
 
       <select
@@ -69,17 +87,33 @@ export function Toolbar({ editor }: { editor: Editor }) {
       </select>
       <span className="tb-sep" />
 
-      <Btn label="Bold" shortcut={`${mod}B`} active={s.bold} onClick={() => chain().toggleBold().run()}><b>B</b></Btn>
-      <Btn label="Italic" shortcut={`${mod}I`} active={s.italic} onClick={() => chain().toggleItalic().run()}><i>I</i></Btn>
-      <Btn label="Underline" shortcut={`${mod}U`} active={s.underline} onClick={() => chain().toggleUnderline().run()}><u>U</u></Btn>
-      <Btn label="Strikethrough" shortcut={`${mod}Shift+S`} active={s.strike} onClick={() => chain().toggleStrike().run()}><s>S</s></Btn>
+      <Btn label="Bold" shortcut={`${mod}B`} active={s.bold} onClick={() => chain().toggleBold().run()}>
+        <Bold {...ICON} strokeWidth={2.5} />
+      </Btn>
+      <Btn label="Italic" shortcut={`${mod}I`} active={s.italic} onClick={() => chain().toggleItalic().run()}>
+        <Italic {...ICON} />
+      </Btn>
+      <Btn label="Underline" shortcut={`${mod}U`} active={s.underline} onClick={() => chain().toggleUnderline().run()}>
+        <Underline {...ICON} />
+      </Btn>
+      <Btn label="Strikethrough" shortcut={`${mod}${shift}S`} active={s.strike} onClick={() => chain().toggleStrike().run()}>
+        <Strikethrough {...ICON} />
+      </Btn>
       <span className="tb-sep" />
 
-      <Btn label="Bulleted list" shortcut={`${mod}Shift+8`} active={s.bullet} onClick={() => chain().toggleBulletList().run()}>•≡</Btn>
-      <Btn label="Numbered list" shortcut={`${mod}Shift+7`} active={s.ordered} onClick={() => chain().toggleOrderedList().run()}>1≡</Btn>
-      <Btn label="Quote" shortcut={`${mod}Shift+B`} active={s.quote} onClick={() => chain().toggleBlockquote().run()}>❝</Btn>
+      <Btn label="Bulleted list" shortcut={`${mod}${shift}8`} active={s.bullet} onClick={() => chain().toggleBulletList().run()}>
+        <List {...ICON} />
+      </Btn>
+      <Btn label="Numbered list" shortcut={`${mod}${shift}7`} active={s.ordered} onClick={() => chain().toggleOrderedList().run()}>
+        <ListOrdered {...ICON} />
+      </Btn>
+      <Btn label="Quote" shortcut={`${mod}${shift}B`} active={s.quote} onClick={() => chain().toggleBlockquote().run()}>
+        <Quote {...ICON} />
+      </Btn>
       <span className="tb-sep" />
-      <Btn label="Clear formatting" onClick={() => chain().unsetAllMarks().clearNodes().run()}>T̸</Btn>
+      <Btn label="Clear formatting" onClick={() => chain().unsetAllMarks().clearNodes().run()}>
+        <RemoveFormatting {...ICON} />
+      </Btn>
     </div>
   );
 }

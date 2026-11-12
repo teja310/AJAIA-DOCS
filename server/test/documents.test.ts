@@ -44,6 +44,19 @@ describe('documents', () => {
     expect(reopened.body.document.content_html).toBe(html);
   });
 
+  it('lists documents with a short, well-formed HTML preview', async () => {
+    const { body } = await ctx.alice.post('/api/documents').send({ title: 'Long' }).expect(201);
+    const long = '<h1>Title</h1>' + '<p><strong>' + 'x'.repeat(3000) + '</strong></p>';
+    await ctx.alice.patch(`/api/documents/${body.document.id}`).send({ content_html: long, version: 1 }).expect(200);
+
+    const list = await ctx.alice.get('/api/documents').expect(200);
+    const row = list.body.owned.find((d: { id: string }) => d.id === body.document.id);
+    expect(row.preview.startsWith('<h1>Title</h1><p><strong>')).toBe(true);
+    expect(row.preview.endsWith('</strong></p>')).toBe(true); // truncated tags are closed
+    expect(row.preview.length).toBeLessThan(1600);
+    expect(row).not.toHaveProperty('content_html');
+  });
+
   it('strips dangerous HTML on save', async () => {
     const { body } = await ctx.alice.post('/api/documents').send({}).expect(201);
     const res = await ctx.alice

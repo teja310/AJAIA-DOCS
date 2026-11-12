@@ -14,6 +14,7 @@ A lightweight, Google-Docs-inspired collaborative document editor. Create, renam
 | Area | Behaviour |
 |---|---|
 | Documents | Create, rename (inline title), edit, delete; autosave ~0.8 s after you stop typing; `Ctrl/⌘+S` saves immediately |
+| Dashboard | Google-Docs-style card grid with live content previews, title search, grid/list toggle (remembered per browser) |
 | Formatting | Bold, italic, underline, strikethrough, H1–H3, bulleted & numbered lists, block quote, undo/redo, keyboard shortcuts |
 | File upload | **Supported: `.txt`, `.md`, `.docx` up to 2 MB.** Upload from the dashboard to create a new document, or "Import file" inside a document to append to it |
 | Sharing | Owner shares with another seeded user as *View only* or *Can edit*; can change role or revoke. Dashboard splits **My documents** / **Shared with me** with role badges |
