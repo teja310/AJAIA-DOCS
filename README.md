@@ -3,6 +3,7 @@
 A lightweight, Google-Docs-inspired collaborative document editor. Create, rename and edit rich-text documents, import `.txt` / `.md` / `.docx` files, and share documents with teammates as **viewer** or **editor**.
 
 > **Live demo:** https://ajaia-docs-74n2.onrender.com (free tier; first load after idling can take 30–60 s)
+> **Walkthrough video:** https://www.loom.com/share/4b8a53bddec2481783d4ff4812d1f27d · **Submission notes:** [SUBMISSION.md](SUBMISSION.md)
 > **Demo accounts** (password for all: `demo1234`):
 > `alice@ajaia.test` · `bob@ajaia.test` · `carol@ajaia.test`
 > Alice owns a seeded "Welcome" document that is already shared with Bob as an editor.
